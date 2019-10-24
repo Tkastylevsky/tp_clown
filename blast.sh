@@ -1,16 +1,4 @@
 #! /bin/bash
-TRANSDECODERTRANSCRIPTOMES=$data"/Transdecoder_transcriptome"
-REFERENCESMUSDIR=$data"/blast"
-
-ANNOTATIONSBLAST=$data"/annotation"
-TIMEFILE="$ANNOTATIONSBLAST/temps_blast.txt"
-
-
-
-FASTAREFERENCE=$REFERENCESMUSDIR/"stegastes_partitus.mart.txt"
-
-BLASTDBDIR=$REFERENCESMUSDIR
-BLASTDB=$BLASTDBDIR/"stegastes_partitus.db"
 
 #build reference database
 makeblastdb 
