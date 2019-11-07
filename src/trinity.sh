@@ -34,4 +34,4 @@ sed -re "s/(>[_a-zA-Z0-9]*)( len=[0-9]*)( path=.*)/\1/" Trinity.fasta >Trinity2.
 rm Trinity.fasta
 mv Trinity2.fasta Trinity.fasta
 
-
+perl /softwares/trinityrnaseq-Trinity-v2.8.5/util/TrinityStats.pl Trinity.fasta > stats_trinity.txt
