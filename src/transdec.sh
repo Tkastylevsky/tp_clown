@@ -9,15 +9,14 @@ cd $data
 
 # Create a directory where the data will be downloaded
 mkdir -p Transdec_data
-
-cp /home/disk/tp/data/Trinity_data/trinity.fasta trinity.fasta
 cd Transdec_data
-TransDecoder.LongOrfs -t Trinity.fasta
 
-makeblastdb -in stegastes.fa -dbtype nucl
+cp /home/rstudio/disk/tp/data/Trinity_data/Trinity.fasta Trinity.fasta
+cp /home/rstudio/disk/tp/data/Trinity_data/Trinity.fasta.gene_trans_map Trinity.fasta.gene_trans_map
+TransDecoder.LongOrfs -S -t Trinity.fasta --gene_trans_map Trinity.fasta.gene_trans_map   #on garde des proteines minimale de 100
 
-blastn -query transdecoder_dir/longest_orfs.pep  \
-    -db stegastes.fa  -max_target_seqs 1 \
-    -outfmt 6 -evalue 1e-5 -num_threads 10 > blastp.outfmt6
 
-TransDecoder.Predict -t target_transcripts.fasta --retain_blastp_hits blastp.outfmt6
+TransDecoder.Predict -t Trinity.fasta --single_best_only --cpu 10
+
+
+
