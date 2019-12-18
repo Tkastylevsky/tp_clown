@@ -1,4 +1,15 @@
 #!/usr/bin/env Rscript
+
+
+setwd(dir = "/home/rstudio/disk/tp/data/BLASTN_data")
+test = read.table("blast_stegastes" )
+
+test[test$V2=="ENSSPAG00000013419|si:ch211-256m1.8",]
+
+
+
+
+
 args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least one argument: if not, return an error

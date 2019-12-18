@@ -5,6 +5,29 @@
 
 #install.packages("seqinr")
 library(seqinr)
-f=read.fasta("mart_export.txt")
+f=read.fasta("/home/rstudio/disk/tp/data/BLASTN_data/stegastes.fa")
 
-write.fasta(sequences=sequences, names=names,  file.out="mart_no_redondancy.fa")
+
+sequences <- sapply(f, c2s)
+
+sequences = sequences[sequences!="sequence unavailable"]
+genes <- unique(names(f))
+
+filtered_seq <- lapply(genes, function(v) {
+  
+  sq=sequences[names(sequences)==v]
+  
+  if (length(sq) != 0) {
+    lsq=sapply(1:length(sq),function (x) {
+      return(unname(nchar(sq[x])))
+    })
+    
+    return(c(v,toupper(sq[which(lsq==max(lsq))][1])))
+  }
+})
+
+vector = unlist(filtered_seq)
+names = vector[c(TRUE,FALSE)]
+sequences = as.list(vector[c(FALSE,TRUE)])
+
+write.fasta(sequences=sequences, names=names,  file.out="/home/rstudio/disk/tp/data/BLASTN_data/stegastes_clean2.fa")

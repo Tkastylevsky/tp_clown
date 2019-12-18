@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Create a working directory:
-data="/home/rstudio/disk/test2"
+data="/home/rstudio/disk/tp/data"
 mkdir -p $data #crée un dossier data la ou on va travailler
 cd $data
 
@@ -21,7 +21,7 @@ SRR7591069
 # For each SRR accession, download the data :
 for i in $SRR  #le dollar permet de rentrer dans le contenu de la variable
 do
-fastq-dump $i -X 2  # télécharge les séquences
+fastq-dump $i # télécharge les séquences
 
 # Rename sequence names, trinity need that their name ends with "/1".
 

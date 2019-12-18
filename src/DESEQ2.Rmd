@@ -1,0 +1,55 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r }
+
+setwd("/home/rstudio/disk/tp/data/DESEQ_data")
+library("DESeq2")
+library(ggplot2)
+#Import data
+countTable = read.csv("countTable1.csv", h=T)
+samples = read.table("samples.txt", h=T)
+
+countTable[countTable$X=="TRINITY_DN19519_c0_g1",]
+rownames(countTable) = countTable$X
+countTable=countTable[,2:7]
+
+countTable = round(countTable)
+#Make dataset for DESeq2 from out coutTable (and not from output trinity, but the same)
+dds <- DESeqDataSetFromMatrix(countData = countTable,
+                              colData = samples,
+                              design = ~   individuals + tissue)
+dds_res = DESeq(dds)
+
+
+
+#Log fold change shrinkage
+resultsNames(dds_res)
+resLFC <- lfcShrink(dds_res, coef="tissue_white_vs_orange", type="apeglm")
+resLFC
+results_dds = resLFC[order(resLFC$padj),]
+results_signif = results_dds[results_dds$pvalue<0.05,]
+results_signif
+results_dds[rownames(results_dds)=="TRINITY_DN19519_c0_g1",]
+
+d <- plotCounts(dds_res, gene="TRINITY_DN19519_c0_g1", intgroup="tissue", 
+                returnData=TRUE)
+
+plot1 <- ggplot(d, aes(x=tissue, y=count)) + 
+  ggtitle("TRINITY_DN19519_c0_g1_i1")  +
+  geom_point(position=position_jitter(w=0.1,h=0)) + 
+  scale_y_log10(breaks=c(25,100,400))
+plot1
+
+
+
+```
+
