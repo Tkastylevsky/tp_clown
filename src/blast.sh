@@ -19,6 +19,7 @@ makeblastdb -in stegastes_clean2.fa -dbtype nucl -parse_seqids -out stegastes
 blastn -db stegastes -query /home/rstudio/disk/tp/data/salmon_data/Trinity.fasta -evalue 1e-10 -outfmt 6 -out blast_stegastes
 
 
+
 Rscript --vanilla  annote_fasta_from_blast.R $out_blast 
 grep ">" stegastes_clean2.fa | sort | uniq -c | sort -nr | less
 

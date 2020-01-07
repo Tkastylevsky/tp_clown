@@ -15,8 +15,12 @@ setwd("/home/rstudio/disk/tp/data/DESEQ_data")
 library("DESeq2")
 library(ggplot2)
 #Import data
+
+transdecoder = read.table("/home/rstudio/disk/tp/data/BLASTN_data/blast_stegastes")
 countTable = read.csv("countTable1.csv", h=T)
 samples = read.table("samples.txt", h=T)
+
+
 
 countTable[countTable$X=="TRINITY_DN19519_c0_g1",]
 rownames(countTable) = countTable$X
@@ -27,6 +31,12 @@ countTable = round(countTable)
 dds <- DESeqDataSetFromMatrix(countData = countTable,
                               colData = samples,
                               design = ~   individuals + tissue)
+
+
+#Pre-filteeing: remove rows if number reads < 10  
+keep <- rowSums(counts(dds)) >= 10
+dds <- dds[keep,]
+
 dds_res = DESeq(dds)
 
 
@@ -48,6 +58,37 @@ plot1 <- ggplot(d, aes(x=tissue, y=count)) +
   geom_point(position=position_jitter(w=0.1,h=0)) + 
   scale_y_log10(breaks=c(25,100,400))
 plot1
+
+
+
+plotMA(dds_res, ylim=c(-10,10))
+
+plotMA(resLFC, ylim=c(-10,10))
+
+
+
+rld <- rlog(dds, blind=FALSE)
+#Blind false since expect differential expression in genes
+#N.B transformée plus rapide avec vsd mais on a que 3  anyway
+
+#PCA 
+plotPCA(rld, intgroup=c("tissue", "individuals"))
+plotPCA(rld, intgroup="tissue")
+plotPCA(rld, intgroup="individuals")
+
+pcaData = plotPCA(rld, intgroup=c("tissue", "individuals"), returnData=T) #500 gene par défaut
+
+percentVar <- round(100 * attr(pcaData, "percentVar"))
+
+
+
+ggplot(pcaData, aes(PC1, PC2, color=tissue, shape=individuals)) +
+  geom_point(size=3) +
+  xlab(paste0("PC1: ",percentVar[1],"% variance")) +
+  ylab(paste0("PC2: ",percentVar[2],"% variance")) + 
+  coord_fixed()
+
+
 
 
 
