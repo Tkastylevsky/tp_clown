@@ -1,4 +1,8 @@
 #! /bin/bash
+
+
+#ce code permet d'effectuer un blast de nos séquences codantes sur celles, annotées, de stegastes, afin d'annoter les notres. 
+
 data="/home/rstudio/disk/tp/data"
 cd $data
 cd BLASTN_data

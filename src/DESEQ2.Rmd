@@ -7,13 +7,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
+Cette partie du code est dédiée a l'analyse des données. Pour cela, on va majoritairement utiliser le package DESeq2, qui permet de faire de l'analyse différencielle de données RNAseq.
 
 ```{r }
-
+#On load les packages
 setwd("/home/rstudio/disk/tp/data/DESEQ_data")
 library("DESeq2")
 library(ggplot2)
+
+
 #Import data
 
 transdecoder = read.table("/home/rstudio/disk/tp/data/BLASTN_data/blast_stegastes")
@@ -21,21 +23,23 @@ countTable = read.csv("countTable1.csv", h=T)
 samples = read.table("samples.txt", h=T)
 
 
-
+#on met la table de compte au bn format
 countTable[countTable$X=="TRINITY_DN19519_c0_g1",]
 rownames(countTable) = countTable$X
 countTable=countTable[,2:7]
+
 
 countTable = round(countTable)
 #Make dataset for DESeq2 from out coutTable (and not from output trinity, but the same)
 dds <- DESeqDataSetFromMatrix(countData = countTable,
                               colData = samples,
                               design = ~   individuals + tissue)
-
+#dans ce design, on prend en compte le fait que l'on a 3 individus différents lorsque l'on cherche a comparer l'expression dans nos deux tissus
 
 #Pre-filteeing: remove rows if number reads < 10  
 keep <- rowSums(counts(dds)) >= 10
 dds <- dds[keep,]
+
 
 dds_res = DESeq(dds)
 
@@ -45,9 +49,13 @@ dds_res = DESeq(dds)
 resultsNames(dds_res)
 resLFC <- lfcShrink(dds_res, coef="tissue_white_vs_orange", type="apeglm")
 resLFC
+#on ordonne les gènes en fonction de la valeur de la p-value ajustée a la sortie du test de Wald
 results_dds = resLFC[order(resLFC$padj),]
 results_signif = results_dds[results_dds$pvalue<0.05,]
 results_signif
+
+
+#On regarde spécifiquement pour sayan après l'avoir identifié parmi nos transcrits dans notre Blast.
 results_dds[rownames(results_dds)=="TRINITY_DN19519_c0_g1",]
 
 d <- plotCounts(dds_res, gene="TRINITY_DN19519_c0_g1", intgroup="tissue", 
@@ -61,6 +69,7 @@ plot1
 
 
 
+#traçage des MAplots
 plotMA(dds_res, ylim=c(-10,10))
 
 plotMA(resLFC, ylim=c(-10,10))
@@ -71,7 +80,7 @@ rld <- rlog(dds, blind=FALSE)
 #Blind false since expect differential expression in genes
 #N.B transformée plus rapide avec vsd mais on a que 3  anyway
 
-#PCA 
+#traçage des PCA.
 plotPCA(rld, intgroup=c("tissue", "individuals"))
 plotPCA(rld, intgroup="tissue")
 plotPCA(rld, intgroup="individuals")

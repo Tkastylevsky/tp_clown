@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#ce code permet de télécharger les DNA de RNAseq du poisson clown. 
+
+
 # Create a working directory:
 data="/home/rstudio/disk/tp/data"
 mkdir -p $data #crée un dossier data la ou on va travailler

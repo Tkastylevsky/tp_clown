@@ -1,3 +1,5 @@
+#ce code permet de récuper les séquences codantes de stegastes pour faire le BLAST.
+
 data="/home/rstudio/disk/tp/data"
 cd $data
 
@@ -15,3 +17,8 @@ wget -O stegastes.fa 'http://ensembl.org/biomart/martservice?query=
 		<Attribute name = "external_gene_name" />
 	</Dataset>
 </Query>'
+
+#coding : récupère les sequences codantes
+#ensemble-gene-id : l'identifiant ensembl
+#external gene name : nom d'usage du gène
+

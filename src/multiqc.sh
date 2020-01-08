@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#ce code permet de faire tounrer le package multiqc,qui prend en entrée les sorties de fastqc de tous nos echantillons.*
+#Cela nous permet de tous les visualiser en même temps.
+
 # Create a working directory:
 data="/home/rstudio/disk/tp/data"
 cd $data
