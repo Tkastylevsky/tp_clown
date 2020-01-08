@@ -27,9 +27,12 @@ Trinity provides some statistics about the realised assembly, they will be store
 The first step of the annotation will be to use Transdecoder in order to extract the ORFs from the reconstructed transcripts. 
 These ORF will then be blasted on the coding sequences of Stegastes Partitus, retrieved from Biomart. 
 To obtain the results from Transdecoder, please use transdec.sh
-To retrieve the genome of Stegastes Partitus with the chosen options, explained in the code, please use get_stegastes.sh. 
+To retrieve the genome of Stegastes Partitus with the chosen options, explained in the code, please use get_stegastes.sh. You will then need to use mart_to_blast.sh in order to eliminate redundancy in the coding sequences of Stegastes. This step is necessary before the blast.
 to realise the blast, you will need to have a blast version installed on your machine. We have chosen to realise a Blastn, since our reference species is not too phylogenetically distant from the clownfish. 
 Please use blast.sh in order to realise it. 
 
+### Quantification
 
+We will use Salmon in order to quantify the abundance of the reconstructed transcripts. This step can be realised independantly from the annotation, but please kkep in minde that in that case, you will not be able to identify individual transcripts. 
+Please use salmon.sh in order to  
 
