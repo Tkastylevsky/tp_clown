@@ -29,5 +29,8 @@ The first step of the annotation will be to use Transdecoder in order to extract
 These ORF will then be blasted on the coding sequences of Stegastes Partitus, retrieved from Biomart. 
 To obtain the results from Transdecoder, please use transdec.sh
 To retrieve the genome of Stegastes Partitus with the chosen options, explained in the code, please use get_stegastes.sh. 
+to realise the blast, you will need to have a blast version installed on your machine. We have chosen to realise a Blastn, since our reference species is not too phylogenetically distant from the clownfish. 
+Please use blast.sh in order to realise it. 
+
 
 
