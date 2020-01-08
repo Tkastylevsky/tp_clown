@@ -21,13 +21,13 @@ The quality of our data has proven to be satisfying, which allows us to move on 
 
 We will use Trinity in order to assemble our transcripts. the details of the options we chose is avaible in the code, and will also provide information on the nature of the RNA seq data that we have (single end reverse). Please make sure to allocate your file directories correctly and to check the chosen options before launching the assembly. A trial on a smaller dataset is recommended, as the assembly can take several hours depending on your setup. 
 The necessary code is in trinity.sh.
-Trinity provides some statistics about the realised assembly, they will be stored in 
+Trinity provides some statistics about the realised assembly, they will be stored in stats_trinity.txt. An interesting value to look at is the median length of the reconstructed transcripts, which should be around 1.6 Kb. 
 
 ### Data Annotation
 
 The first step of the annotation will be to use Transdecoder in order to extract the ORFs from the reconstructed transcripts. 
 These ORF will then be blasted on the coding sequences of Stegastes Partitus, retrieved from Biomart. 
 To obtain the results from Transdecoder, please use transdec.sh
-To retrieve the genome of Stegastes Partitus with the chosen options, please us get_stegastes.sh. 
+To retrieve the genome of Stegastes Partitus with the chosen options, explained in the code, please use get_stegastes.sh. 
 
 
