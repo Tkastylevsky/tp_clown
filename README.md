@@ -34,5 +34,14 @@ Please use blast.sh in order to realise it.
 ### Quantification
 
 We will use Salmon in order to quantify the abundance of the reconstructed transcripts. This step can be realised independantly from the annotation, but please kkep in minde that in that case, you will not be able to identify individual transcripts. 
-Please use salmon.sh in order to  
+Please use salmon.sh in order to do the quantification. 
+The next step is to use tximport in order to convert the obtained data into a format that can be read by DESeq2. For this, we will us Tximport. please use tximport.R for this. 
+
+### Analysis
+
+The final step is the analysis, that will be done with the DESEQ2.Rmd script. This will allow us to do differencial gene expression analysis using DESeq2, as well as data visualization, both at the gene level and using PCAs. 
+
+## Acknowledgements
+
+We would like to thank our comrades Noa Rigoudy and Heloise Muller, as this work was a common effort with them, as well as our supervisors, with special thanks to corentin Dechaud for his help and for designing the project.
 
